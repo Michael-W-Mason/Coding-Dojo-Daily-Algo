@@ -42,14 +42,12 @@ const expected2 = 0;
  *    bottom right diagonal and the top right to bottom left diagonal.
  */
 function diagonalDifference(sqrMatrix) {
-    let sum1 = 0;
-    let sum2 = 0;
+    let sum = 0;
     for(let i = 0; i < sqrMatrix[0].length; i++){
         let j = sqrMatrix[0].length - 1 - i;
-        sum1 += sqrMatrix[i][i];
-        sum2 += sqrMatrix[i][j];
+        sum += (sqrMatrix[i][i] - sqrMatrix[i][j]);
     }
-    return Math.abs(sum1 - sum2);
+    return Math.abs(sum);
 }
 console.log(diagonalDifference(squareMatrix1));
 console.log(diagonalDifference(squareMatrix2));
