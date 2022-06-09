@@ -107,7 +107,6 @@ class SLL {
 
     // Return (don't remove) the second to last value in your list (ex: if your list is 2, 5, 6, 3, 9, you should return 3)
     secondToLast() {
-        //  Check if jsut head
         let runner = this.head;
         if(!runner.next){
             return false;
@@ -119,12 +118,12 @@ class SLL {
     }
 
     // Given a value, remove that value from the list and return true or false whether it was removed
-    removeVal(val, runner=this.head) {
+    removeVal(val, runner=this.head, removed=false) {
         if(this.isEmpty()){
             return false;
         }
         while(runner.next){
-            if(runner.next.data == val){
+            if(runner.next.data === val){
                 break;
             }
             runner = runner.next;
@@ -135,13 +134,13 @@ class SLL {
                 return true;
             }
             else{
-                return false;
+                return removed;
             }
         }
         let temp = runner.next;
         runner.next = temp.next;
         temp.next = null;
-        return this.removeVal(val, runner);
+        return this.removeVal(val, runner, true);
     }
     // Note: how would this code look if you only wanted to remove one instance of the value? How would this code look if you wanted to remove ALL instances of the value? (ie: plan for duplicates)
 
@@ -174,8 +173,9 @@ class SLL {
 
 let sll = new SLL();
 sll.insertAtFront(4);
-// sll.insertAtBack(5);
-// sll.insertAtBack(6);
+sll.insertAtBack(5);
+sll.insertAtBack(6);
+sll.insertAtBack(5);
 sll.print();
-console.log(sll.prepend(7, 4));
+console.log(sll.removeVal(5));
 sll.print();
