@@ -147,6 +147,10 @@ class SLL {
     // EXTRA: Given ValueA and ValueB, insert a node with ValueA BEFORE the node containing ValueB (this is called a prepend) and return true or false whether it was pre-pended
     prepend(ValA, ValB) {
         let runner = this.head;
+        if(runner.data == ValB){
+            this.insertAtFront(ValA);
+            return true;
+        }
         if(this.isEmpty()){
             return false;
         }
@@ -157,13 +161,7 @@ class SLL {
             runner = runner.next;
         }
         if(!runner.next){
-            if(runner.data = ValB){
-                this.insertAtFront(ValA);
-                return true;
-            }
-            else{
-                return false;
-            }
+            return false;
         }
         let temp = runner.next;
         runner.next = new Node(ValA, temp);
@@ -175,7 +173,6 @@ let sll = new SLL();
 sll.insertAtFront(4);
 sll.insertAtBack(5);
 sll.insertAtBack(6);
-sll.insertAtBack(5);
 sll.print();
-console.log(sll.removeVal(5));
+console.log(sll.prepend(7, 8));
 sll.print();
