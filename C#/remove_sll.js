@@ -54,11 +54,13 @@ class SLL {
     average() {
         var runner = this.head;
         var sum = 0;
+        let count = 0;
         while (runner) {
             sum += runner.data;
+            count++;
             runner = runner.next;
         }
-        return (sum / this.size);
+        return (sum / count);
     }
 
     contains(val) {
@@ -105,7 +107,6 @@ class SLL {
         return temp;
     }
 
-    // Return (don't remove) the second to last value in your list (ex: if your list is 2, 5, 6, 3, 9, you should return 3)
     secondToLast() {
         let runner = this.head;
         if(!runner.next){
@@ -117,7 +118,6 @@ class SLL {
         return runner;
     }
 
-    // Given a value, remove that value from the list and return true or false whether it was removed
     removeVal(val, runner=this.head, removed=false) {
         if(this.isEmpty()){
             return false;
@@ -142,9 +142,7 @@ class SLL {
         temp.next = null;
         return this.removeVal(val, runner, true);
     }
-    // Note: how would this code look if you only wanted to remove one instance of the value? How would this code look if you wanted to remove ALL instances of the value? (ie: plan for duplicates)
-
-    // EXTRA: Given ValueA and ValueB, insert a node with ValueA BEFORE the node containing ValueB (this is called a prepend) and return true or false whether it was pre-pended
+    
     prepend(ValA, ValB) {
         let runner = this.head;
         if(runner.data == ValB){
@@ -174,5 +172,5 @@ sll.insertAtFront(4);
 sll.insertAtBack(5);
 sll.insertAtBack(6);
 sll.print();
-console.log(sll.prepend(7, 8));
+console.log(sll.average());
 sll.print();
