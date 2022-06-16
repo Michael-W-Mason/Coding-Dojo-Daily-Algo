@@ -1,107 +1,188 @@
-class Node{
-    constructor(data, left=null, right=null){
+class Node {
+    constructor(data, left = null, right = null) {
         this.data = data;
         this.left = left;
         this.right = right;
     }
 }
 
-class BST{
-    constructor(root=null){
+class BST {
+    constructor(root = null) {
         this.root = root;
     }
 
-    isEmpty(){
-        if(this.root === null){
+    isEmpty() {
+        if (this.root === null) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
 
-    min(){
+    min() {
         let runner = this.root;
-        while(runner.left){
+        while (runner.left) {
             runner = runner.left;
         }
         return runner.data;
     }
 
-    max(){
+    max() {
         let runner = this.root;
-        while(runner.right){
+        while (runner.right) {
             runner = runner.right;
         }
         return runner.data;
     }
 
-    contains(val){
+    contains(val) {
         let runner = this.root;
-        if(!runner){
+        if (!runner) {
             return false;
         }
-        while(runner){
-            if(runner.data === val){
+        while (runner) {
+            if (runner.data === val) {
                 return true;
             }
-            else if(runner.data > val){
+            else if (runner.data > val) {
                 runner = runner.left;
             }
-            else{
+            else {
                 runner = runner.right;
             }
         }
         return false;
     }
 
-    containsRecursive(val, runner=this.root){
-        if(!runner){
+    containsRecursive(val, runner = this.root) {
+        if (!runner) {
             return false;
         }
-        if(runner.data === val){
+        if (runner.data === val) {
             return true;
         }
-        else if(runner.data > val){
+        else if (runner.data > val) {
             return this.containsRecursive(val, runner.left);
         }
-        else{
+        else {
             return this.containsRecursive(val, runner.right);
         }
     }
 
-    range(){
+    range() {
         return this.max() - this.min();
     }
 
-    height(branch=this.head){
-        if(!branch){
+    insert(val) {
+        let runner = this.root;
+        if (!runner) {
+            this.root = new Node(val);
+            return;
+        }
+        while (true) {
+            if (val > runner.data) {
+                if (!runner.right) {
+                    runner.right = new Node(val);
+                    return;
+                }
+                else {
+                    runner = runner.right;
+                }
+            }
+            else if (val < runner.data) {
+                if (!runner.left) {
+                    runner.left = new Node(val);
+                    return;
+                }
+                else {
+                    runner = runner.left;
+                }
+            }
+            else{
+                let temp = runner;
+                runner = runner.left;
+                temp.left = new Node(val);
+                temp.left.left = runner;
+                return;
+            }
+        }
+    }
+
+    insertRecursive(val, runner=this.root){
+        if (!runner) {
+            this.root = new Node(val);
+            return;
+        }
+        if (val > runner.data) {
+            if (!runner.right) {
+                runner.right = new Node(val);
+                return;
+            }
+            else {
+                runner = runner.right;
+                return this.insertRecursive(val, runner);
+            }
+        }
+        else if (val < runner.data) {
+            if (!runner.left) {
+                runner.left = new Node(val);
+                return;
+            }
+            else {
+                runner = runner.left;
+                return this.insertRecursive(val, runner);
+            }
+        }
+        else{
+            let temp = runner;
+            runner = runner.left;
+            temp.left = new Node(val);
+            temp.left.left = runner;
+            return;
+        }
+    }
+
+    size(runner=this.root){
+        if(runner === null){
             return 0;
         }
-        else{   
-            return 1 + Math.max(this.height(branch.left), this.height(branch.right));
+        else{
+            return 1 + this.size(runner.left) + this.size(runner.right);
+        }
+    }
+
+    height(runner = this.root){
+        if(runner === null){
+            return 0;
+        }
+        else{
+            return 1 + Math.max(this.height(runner.left), this.height(runner.right));
+        }
+    }
+
+    isFull(runner = this.root){
+        if(runner === null){
+            return true;
+        }
+        else if(runner.right === null && runner.left !== null){
+            return false;
+        }
+        else if(runner.right !== null && runner.left === null){
+            return false;
+        }
+        else{
+            return this.isFull(runner.left) && this.isFull(runner.right);
         }
     }
 }
 
-let node1 = new Node(5);
-let node2 = new Node(4);
-let node3 = new Node(6);
+let myBst = new BST();
+myBst.insertRecursive(4);
+myBst.insertRecursive(3);
+myBst.insertRecursive(3.5);
+myBst.insertRecursive(2);
+myBst.insertRecursive(6);
+myBst.insertRecursive(7);
 
-let node4 = new Node(5.5);
-let node5 = new Node(8);
-
-let node6 = new Node(3);
-let node7 = new Node(4.5);
-
-node1.left = node2;
-node1.right = node3;
-
-node2.left = node6;
-node2.right = node7;
-
-node3.left = node4;
-node3.right = node5;
-
-let myBst = new BST(node1);
 console.log(myBst.height());
