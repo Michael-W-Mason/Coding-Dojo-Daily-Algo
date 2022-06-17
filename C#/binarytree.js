@@ -99,7 +99,7 @@ class BST {
                     runner = runner.left;
                 }
             }
-            else{
+            else {
                 let temp = runner;
                 runner = runner.left;
                 temp.left = new Node(val);
@@ -109,7 +109,7 @@ class BST {
         }
     }
 
-    insertRecursive(val, runner=this.root){
+    insertRecursive(val, runner = this.root) {
         if (!runner) {
             this.root = new Node(val);
             return;
@@ -134,7 +134,7 @@ class BST {
                 return this.insertRecursive(val, runner);
             }
         }
-        else{
+        else {
             let temp = runner;
             runner = runner.left;
             temp.left = new Node(val);
@@ -143,46 +143,92 @@ class BST {
         }
     }
 
-    size(runner=this.root){
-        if(runner === null){
+    size(runner = this.root) {
+        if (runner === null) {
             return 0;
         }
-        else{
+        else {
             return 1 + this.size(runner.left) + this.size(runner.right);
         }
     }
 
-    height(runner = this.root){
-        if(runner === null){
+    height(runner = this.root) {
+        if (runner === null) {
             return 0;
         }
-        else{
+        else {
             return 1 + Math.max(this.height(runner.left), this.height(runner.right));
         }
     }
 
-    isFull(runner = this.root){
-        if(runner === null){
+    isFull(runner = this.root) {
+        if (runner === null) {
             return true;
         }
-        else if(runner.right === null && runner.left !== null){
+        else if (runner.right === null && runner.left !== null) {
             return false;
         }
-        else if(runner.right !== null && runner.left === null){
+        else if (runner.right !== null && runner.left === null) {
             return false;
         }
-        else{
+        else {
             return this.isFull(runner.left) && this.isFull(runner.right);
         }
     }
+
+    PreOder(runner = this.root, arr = []) {
+        // If our BST is empty return empty array
+        if (!runner) {
+            return arr;
+        }
+        arr.push(runner.data);
+        // If we hit last node of branch push to array
+        if (!runner.left && !runner.right) {
+            return;
+        }
+        // Go Through left side first
+        if (runner.left) {
+            this.PreOder(runner.left, arr);
+        }
+        // Go through right side
+        if (runner.right) {
+            this.PreOder(runner.right, arr);
+        }
+        return arr;
+    }
+
+    InOrder(runner = this.root, arr = []) {
+        // If our BST is empty return empty array
+        if (!runner) {
+            return arr;
+        }
+        if (!runner.left && !runner.right) {
+            arr.push(runner.data);
+            return;
+        }
+        if (runner.left) {
+            this.InOrder(runner.left, arr)
+            arr.push(runner.data);
+        }
+        if (runner.right && !runner.left) {
+            arr.push(runner.data);
+            this.InOrder(runner.right, arr);
+        }
+        else{
+            this.InOrder(runner.right, arr);
+        }
+        return arr;
+    }
+
+
 }
 
 let myBst = new BST();
 myBst.insertRecursive(4);
 myBst.insertRecursive(3);
-myBst.insertRecursive(3.5);
 myBst.insertRecursive(2);
+myBst.insertRecursive(3.2);
+myBst.insertRecursive(5);
 myBst.insertRecursive(6);
-myBst.insertRecursive(7);
 
-console.log(myBst.height());
+console.log(myBst.InOrder());
