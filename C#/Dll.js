@@ -123,12 +123,12 @@ class Dll {
             return this;
         }
         while(start !== end){
-            if(start.next === end){
-                break;
-            }
             temp = start.data;
             start.data = end.data;
             end.data = temp;
+            if(start.next === end){
+                break;
+            }
             start = start.next;
             end = end.prev;
         }
@@ -157,7 +157,7 @@ dll.insertAtBack(1);
 dll.insertAtBack(2);
 dll.insertAtBack(3);
 dll.insertAtBack(4);
-dll.insertAtBack(5);
+// dll.insertAtBack(5);
 dll.print();
 dll.reverse();
 dll.print();
