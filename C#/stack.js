@@ -1,5 +1,4 @@
 /* LIFO = Last In First Out */
-
 class Node {
     constructor(value) {
         this.next = undefined;
@@ -19,15 +18,15 @@ class Stack {
     }
 
     Peek() {
-        if(!this.top){
-            return this;
+        if(this.IsEmpty()){
+            return this.top;
         }
         return this.top.value;
     }
 
     Pop() {
-        if(!this.top){
-            return this;
+        if(this.IsEmpty()){
+            return this.top;
         }
         let runner = this.top;
         this.top = this.top.next;
